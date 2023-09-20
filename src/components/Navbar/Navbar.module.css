@@ -1,0 +1,14 @@
+.navbar {
+    background-color: #545963;
+    width: 170px;
+    height: 900px;
+}
+
+.activeLink {
+    color: rgba(3, 214, 161, 1);
+    /* text-decoration: underline; */
+}
+
+.signOut {
+    cursor: pointer;
+}

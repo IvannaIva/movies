@@ -1,0 +1,99 @@
+                .cardMovie {
+                    width: 315px;
+                    background-color: #545963;
+                    border-radius: 30px;
+                }
+                
+                .cardMovieImg {
+                    padding-top: 22px;
+                    position: relative;
+                }
+                
+                .cardImg {
+                    height: 400px;
+                    width: 270px;
+                    border-radius: 20px;
+                    margin: 0 auto;
+                }
+                
+                .overlayImage {
+                    position: absolute;
+                    bottom: -16px;
+                    right: 20px;
+                    cursor: pointer;
+                }
+                
+                .attributeMovie {
+                    padding: 0px !important;
+                    height: 180px;
+                    width: 270px;
+                    margin: 0 auto;
+                }
+                
+                .cardContent {
+                    padding: 0px 16px!important;
+                    /* padding-left: 16px !important; */
+                }
+                
+                .titleMovieDetails {
+                    width: 263px;
+                    height: 45px;
+                    font-family: Roboto !important;
+                    font-size: 24px !important;
+                    font-weight: 700 !important;
+                    line-height: 32px;
+                    color: #03D6A1;
+                }
+                
+                .titleMovie {
+                    /* width: 263px; */
+                    height: 40px;
+                    color: #ffffff;
+                }
+                
+                .titleMovie p {
+                    font-size: 24px;
+                    font-weight: 700;
+                    line-height: 32px;
+                    margin: 0px;
+                }
+                
+                .descriptionMovie {
+                    color: rgba(255, 255, 255, 0.6) !important;
+                }
+                
+                .descriptionMovie p {
+                    font-family: Blogger Sans;
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 17px;
+                    letter-spacing: 0.04em;
+                }
+                
+                .buttonWatch {
+                    width: 230px;
+                    height: 40px;
+                    background-color: #03D6A1;
+                    color: #FFFFFF;
+                    border-radius: 15px;
+                    text-transform: none;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                
+                .cardContentDetails {
+                    display: block;
+                    text-align: left;
+                }
+                
+                .tableWithoutBorder td,
+                .tableWithoutBorder th {
+                    border: none;
+                }
+                
+                .table_cell {
+                    /* background-color: #ff5722; */
+                    color: #fff !important;
+                    font-weight: bold;
+                }
