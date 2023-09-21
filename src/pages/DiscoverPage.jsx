@@ -15,7 +15,18 @@ function DiscoverPage() {
   const dispatch = useDispatch();
   const moviesData = useSelector((state) => state.movies.moviesData);
   const [errorMessage, setErrorMessage] = useState("");
-  const movieId = 1;
+
+  const [currentMovieId, setCurrentMovieId] = useState(1);
+
+  const handleNextMovie = () => {
+    // Оновлюємо ідентифікатор для відображення наступного фільму
+    setCurrentMovieId(currentMovieId + 1);
+  };
+  const handlePreviousMovie = () => {
+    if (currentMovieId !== 1) {
+      setCurrentMovieId(currentMovieId - 1);
+    }
+  };
 
   //  getMovies({})
   //  .then((response) => {
@@ -32,7 +43,7 @@ function DiscoverPage() {
   //  });
 
   useEffect(() => {
-    getMovieById(movieId)
+    getMovieById(currentMovieId)
       .then((response) => {
         console.log("Movie by ID:", response);
 
@@ -48,12 +59,20 @@ function DiscoverPage() {
       .catch((error) => {
         console.error("Error fetching movie by ID:", error);
       });
-  }, []);
+  }, [currentMovieId]);
 
   const handleLike = () => {
-    console.log("dskfsdfsdf");
-    dispatch(likeMovie(movieId));
+   
+    dispatch(likeMovie(currentMovieId));
+    handleNextMovie();
   };
+
+  const handleDislike = () => {
+  
+    dispatch(dislikeMovie(currentMovieId));
+    handleNextMovie();
+  };
+
   return (
     <div className="Home">
       <div className="discover">
@@ -63,7 +82,11 @@ function DiscoverPage() {
           description="Опис"
           moviesData={moviesData}
         />
-        <ButtonsCard handleLike={handleLike} />
+        <ButtonsCard
+          handleLike={handleLike}
+          handleDislike={handleDislike}
+          handlePreviousMovie={handlePreviousMovie}
+        />
       </div>
     </div>
   );

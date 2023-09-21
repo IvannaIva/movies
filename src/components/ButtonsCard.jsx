@@ -16,7 +16,7 @@ const ButtonsTabs = styled(Tabs)({
   backgroundColor: "#545963",
   borderRadius: "30px",
 });
-export default function ButtonsCard({ handleLike }) {
+export default function ButtonsCard({ handleLike, handleDislike, handlePreviousMovie }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -27,13 +27,13 @@ export default function ButtonsCard({ handleLike }) {
     handleLike();
   };
 
-  // const handleDislikeClick = () => {
-  //   handleDislike();
-  // };
+  const handleDislikeClick = () => {
+    handleDislike();
+  };
 
-  // const handleRewindClick = () => {
-  //   handleNextMovie();
-  // };
+  const handleRewindClick = () => {
+    handlePreviousMovie();
+  };
 
   return (
     <div className="buttonsTabs">
@@ -46,12 +46,12 @@ export default function ButtonsCard({ handleLike }) {
         <Tab
           icon={<DislikeIcon />}
           aria-label="dislike"
-          // onClick={handleDislikeClick}
+          onClick={handleDislikeClick}
         />
         <Tab
           icon={<RewindIcon />}
           aria-label="rewind"
-          // onClick={handleRewindClick}
+          onClick={handleRewindClick}
         />
       </ButtonsTabs>
     </div>

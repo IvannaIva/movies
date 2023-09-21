@@ -3,14 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const moviesSlice = createSlice({
     name: "movies",
     initialState: {
-
         moviesData: {},
         errorMessage: null,
         likedMovies: [],
         dislikedMovies: [],
     },
     reducers: {
-
         setMoviesData: (state, action) => {
             state.moviesData = action.payload;
             state.errorMessage = null;
@@ -28,10 +26,15 @@ const moviesSlice = createSlice({
             }
         },
         dislikeMovie: (state, action) => {
-            state.dislikedMovies.push(action.payload);
+            const movieId = action.payload;
+
+            if (!state.dislikedMovies.includes(movieId)) {
+                state.dislikedMovies.push(movieId);
+            }
         },
     },
 });
 
-export const { setMoviesData, setError, likeMovie, dislikeMovie } = moviesSlice.actions;
+export const { setMoviesData, setError, likeMovie, dislikeMovie } =
+moviesSlice.actions;
 export default moviesSlice.reducer;
