@@ -12,31 +12,43 @@ function MoviePage() {
   let { id } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
-  useEffect(() => {
-    getMovieById(id)
-      .then((response) => {
-        console.log("Movie by ID:", response);
 
-        if (response.error) {
-          setErrorMessage(response.error.message);
-          dispatch(setMovieDetails(null));
-        } else {
-          setErrorMessage(null);
 
-          dispatch(setMovieDetails(response));
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching movie by ID:", error);
-      });
-  }, []);
+  const currentMovieIndex = useSelector(
+    (state) => state.movies.currentMovieIndex
+  );
+
+  const allMoviesData = useSelector(
+    (state) => state.movies.allMoviesData
+  );
+
+  const currentMovie = allMoviesData[currentMovieIndex];  
+  // useEffect(() => {
+  //   getMovieById(id)
+  //     .then((response) => {
+  //       console.log("Movie by ID:", response);
+
+  //       if (response.error) {
+  //         setErrorMessage(response.error.message);
+  //         dispatch(setMovieDetails(null));
+  //       } else {
+  //         setErrorMessage(null);
+
+  //         dispatch(setMovieDetails(response));
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching movie by ID:", error);
+  //     });
+  // }, []);
 
   return (
     <div className="movieDetailsPage">
       <BackIcon />
+
       <div className="right-movieDetails">
-        <MovieDetailsCard />
-        <MovieDetails />
+        <MovieDetailsCard currentMovie={currentMovie}/>
+        <MovieDetails currentMovie={currentMovie}/>
       </div>
     </div>
   );

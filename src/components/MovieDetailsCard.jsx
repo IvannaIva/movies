@@ -21,20 +21,20 @@ const CardMovie = styled(Card)({
   borderRadius: "30px" /* Заокруглення кутів картки */,
 });
 
-export default function MovieDetails() {
+export default function MovieDetails({currentMovie}) {
  
   const dispatch = useDispatch();
  
   const [errorMessage, setErrorMessage] = useState("");
-  const movieDetails = useSelector((state) => state.movies.movieDetails);
-  
+  // const movieDetails = useSelector((state) => state.movies.movieDetails);
+
 
   return (
     <CardMovie>
       <div className={styles.cardMovieImg}>
         <CardMedia
-          image={movieDetails.image}
-          title={movieDetails.title}
+          image={currentMovie.image}
+          title={currentMovie.title}
           className={styles.cardImg}
         />
         <NavLink to={"/"} className="navLink">
@@ -51,7 +51,7 @@ export default function MovieDetails() {
           <img src={netflixImg} alt="Опис зображення" />
         </div>
 
-        <MovieChips movieDetails={movieDetails} />
+        <MovieChips movieDetails={currentMovie} />
         <Button >
           {" "}
           <p className={styles.buttonWatch}>Watch Trailer</p>{" "}

@@ -1,47 +1,45 @@
 import * as React from "react";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import { CenterFocusWeakOutlined } from "@mui/icons-material";
 
 export default function MovieChips({ movieDetails }) {
+  const chipsData = [
+    {
+      label: movieDetails.year,
+      bgColor: "#0BA7FF",
+    },
+    {
+      label: movieDetails.type,
+      bgColor: "#51E97C",
+    },
+    {
+      label: movieDetails.familyFriendly ? movieDetails.familyFriendly : movieDetails.imdbScore,
+      bgColor: "#363A47",
+    },
+    {
+      label: movieDetails.streamingService,
+      bgColor: "#FFC90B",
+    },
+  ];
+
   return (
     <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
-      {/* <Stack direction="row" spacing={1}> */}
-      <Chip
-        label={movieDetails.year}
-        sx={{
-          backgroundColor: "#0BA7FF",
-          color: "success.white",
-          fontSize: 14,
-        }}
-      />
-      <Chip
-        label={movieDetails.type}
-        sx={{
-          backgroundColor: "#51E97C",
-          color: "success.white",
-          fontSize: 14,
-        }}
-      />
-      <Chip 
-       label = {movieDetails.familyFriendly ? movieDetails.familyFriendly : movieDetails.imdbScore}
-        clickable={false}
-        sx={{
-          backgroundColor: "#363A47",
-          color: "success.white",
-          fontSize: 14,
-          
-        }}
-        />
-      <Chip
-        label={movieDetails.streamingService}
-        sx={{
-          backgroundColor: "#FFC90B",
-          color: "success.white",
-          fontSize: 14,
-        }}
-      />
-      {/* </Stack> */}
+      {chipsData.map((chip, index) => {
+        if (chip.label) {
+          return (
+            <Chip
+              key={index}
+              label={chip.label}
+              sx={{
+                backgroundColor: chip.bgColor,
+                color: "success.white",
+                fontSize: 14,
+              }}
+            />
+          );
+        }
+        return null;
+      })}
     </Stack>
   );
 }

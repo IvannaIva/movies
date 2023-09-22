@@ -21,29 +21,48 @@ const CardMovie = styled(Card)({
   borderRadius: "30px" /* Заокруглення кутів картки */,
 });
 
-export default function MovieDetails() {
-  const movieDetails = useSelector((state) => state.movies.movieDetails);
+export default function MovieDetails({currentMovie}) {
+  // const movieDetails = useSelector((state) => state.movies.movieDetails);
 
-  // const maxTextLengthGenres = 30;
-  // const maxTextLengthDescription = 500;
-
+  let actors = "";
   let genres = "";
-  let description = "";
 
-  if (movieDetails && movieDetails.genres) {
-    genres = movieDetails.genres.join(", ");
+  if (currentMovie && currentMovie.altGenres) {
+    genres = currentMovie.genres.join(", ");
   }
-
+  const tableData = [
+    {
+      label: "Actors",
+      data: currentMovie.actors,
+    },
+    {
+      label: "imdbScore",
+      data: currentMovie.imdbScore,
+    },
+    {
+      label: "Subtitles",
+      data: currentMovie.creator,
+    },
+    {
+      label: "Genres",
+      data: genres,
+    },
+    {
+      label: "Region",
+      data: currentMovie.region,
+    },
+  ];
   const textData = [
+    { text: actors, maxTextLength: 100 },
     { text: genres, maxTextLength: 30 },
-    { text: movieDetails.description, maxTextLength: 300 },
+    { text: currentMovie.description, maxTextLength: 300 },
   ];
 
-  const shortenedTexts = textData.map((item) => {
+  const shortenedTexts = textData.map((item, index) => {
     const { text, maxTextLength } = item;
     if (text && text.length > maxTextLength) {
       return (
-        <span key={text.slice(0, maxTextLength)}>
+        <span key={index}>
           {text.slice(0, maxTextLength)}
           <span className="more"> more...</span>
         </span>
@@ -57,53 +76,37 @@ export default function MovieDetails() {
     <CardMovie>
       <CardContent className={styles.cardContentDetails}>
         <Typography className={styles.titleMovieDetails}>
-          {movieDetails.title}
+          {currentMovie.title}
         </Typography>
         <Typography className={styles.descriptionMovie}>
           <p>
-            {movieDetails && movieDetails.altGenres && (
+            {currentMovie && currentMovie.altGenres && (
               <>
-                {movieDetails.altGenres.join(", ")} {movieDetails.year}
+                {currentMovie.altGenres.join(", ")} {currentMovie.year}
               </>
             )}
           </p>
         </Typography>
         <Typography className={styles.descriptionMovie}>
-          <p>{shortenedTexts[1]}</p>
+          <p>{shortenedTexts[2]}</p>
         </Typography>
 
         <Table className={styles.tableWithoutBorder}>
           <TableBody>
-            <TableRow>
-              <TableCell className={styles.table_cell}>Creators</TableCell>
-              <TableCell className={styles.descriptionMovie}>
-                {movieDetails.creator}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={styles.table_cell}>imdbScore</TableCell>
-              <TableCell className={styles.descriptionMovie}>
-                {movieDetails.imdbScore}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={styles.table_cell}>Subtitles</TableCell>
-              <TableCell className={styles.descriptionMovie}>
-                {movieDetails.creator}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={styles.table_cell}>Genres</TableCell>
-              <TableCell className={styles.descriptionMovie}>
-                {genres}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={styles.table_cell}>Region</TableCell>
-              <TableCell className={styles.descriptionMovie}>
-                {movieDetails.region}
-              </TableCell>
-            </TableRow>
+            {tableData.map(
+              (row, index) =>
+                row.data &&
+                row.data.length > 0 && (
+                  <TableRow key={index}>
+                    <TableCell className={styles.table_cell}>
+                      {row.label}
+                    </TableCell>
+                    <TableCell className={styles.descriptionMovie}>
+                      {Array.isArray(row.data) ? row.data.join(", ") : row.data}
+                    </TableCell>
+                  </TableRow>
+                )
+            )}
           </TableBody>
         </Table>
       </CardContent>

@@ -29,7 +29,7 @@ const Navbar = () => {
   const listItemStyles = {
     flexDirection: "column",
     alignItems: "center",
-   
+  
     marginBottom: "30px", // Додайте відступ між айтемами
   };
 
@@ -63,7 +63,7 @@ const Navbar = () => {
         className={location.pathname === "/filters" ? cl.activeLink : "navLink"}
         style={listItemStyles}
       >
-        <ListItemIcon>
+        <ListItemIcon sc={ {justifyContent: "center"}}>
           <img
             className="imgItem"
             src={location.pathname === "/filters" ? filterGreenImg : filterImg}
@@ -98,13 +98,15 @@ const Navbar = () => {
         button
         onClick={handleSignOut}
         style={{
-          marginTop: "250px",
-        flexDirection: "column",
-    
-      }} 
-      >
+          position: "absolute",
+          bottom: "20%",
+          right: "0",
+          flexDirection: "column",
+        }}
+      > <ListItemIcon>
         {/* <div className={cl.signOut}> */}
           <img src={signOutImg} alt="Опис зображення" />
+          </ListItemIcon>
         {/* </div> */}
       </ListItem>
     </List>
