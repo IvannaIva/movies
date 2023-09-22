@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
+ import Input from "@mui/material/Input";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
@@ -17,22 +17,10 @@ import { Amplify } from "aws-amplify";
 import awsConfig from "../api/aws-exports";
 import { signIn } from "../api/auth";
 import { loginSuccess } from "../store/loginSlice";
-
-const formControlStyle = {
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "rgba(255, 0, 0, 1)", // Змінюємо колір рамки
-    },
-    "&:hover fieldset": {
-      borderColor: "rgba(255, 0, 0, 1)", // Колір рамки при наведенні
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "rgba(255, 0, 0, 1)", // Колір рамки при фокусі (знімаємо рамку)
-    },
-  },
-};
+import MyStyledInput from "./MyStyledInput";
 
 export default function Email() {
+  const myComponentRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -80,13 +68,14 @@ export default function Email() {
 
   return (
     <Box>
-          <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles.email_pas_form}>
-        <h2>Welcome back</h2>
-    
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.email_pas_form}>
+          <h2>Welcome back</h2>
+
           <FormControl sx={{ marginBottom: 3 }}>
-            <InputLabel htmlFor="standard-adornment-email">Email</InputLabel>
-            <Input
+          {/* <InputLabel htmlFor="standard-adornment-email">Email</InputLabel> */}
+            <MyStyledInput
+            ref={myComponentRef}
               id="email"
               name="email"
               type="email"
@@ -94,25 +83,18 @@ export default function Email() {
               {...register("email", {
                 required: "Email is required",
               })}
-              sx={{
-                "& input": {
-                  width: "300px",
-                  color: "lightgray",
-              
-                },
-                
-              }}
             />
             <div className={styles.error_wrong}>
               {errors.email && <p>{errors.email.message}</p>}
             </div>
           </FormControl>
 
-          <FormControl sx={{ ...formControlStyle }}>
-            <InputLabel htmlFor="standard-adornment-password">
+          <FormControl>
+          {/* <InputLabel htmlFor="standard-adornment-password">
               Password
-            </InputLabel>
-            <Input
+            </InputLabel> */}
+            <MyStyledInput
+            ref={myComponentRef}
               id="password"
               name="password"
               placeholder="Password"
@@ -123,18 +105,12 @@ export default function Email() {
                   message: "Minimum 5 characters",
                 },
               })}
-              sx={{
-                "& input": {
-                  width: "250px",
-                  color: "lightgray",
-                  // Інші ваши стилі
-                },
-              }}
               type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
-                    aria-label="toggle password visibility"
+                  sx={{color: 'gray'}}
+                    // aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
                   >
@@ -155,14 +131,20 @@ export default function Email() {
             {/* <span onClick={handleForgotPassword}>Forgot Password</span> */}
             <span>Forgot Password</span>
           </div>
-          <p>
-          Not registered yet? <span>Sign up</span>
-          </p>
-          <Button type="submit" className={styles.customButton}>
-            <span>Login</span>
+          <div className={styles.registered}>
+            <span>
+              Not registered yet?{" "}
+              <span className={styles.buttonSingUp}>Sign up</span>
+            </span>
+          </div>
+          <Button
+            type="submit"
+            className={styles.customButton}
+            sx={{ color: "#03D6A1", fontWeight: "700", textTransform: "none" }}
+          >
+            <span>Log in</span>
           </Button>
-       
-      </div>
+        </div>
       </form>
     </Box>
   );

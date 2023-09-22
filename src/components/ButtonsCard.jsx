@@ -6,9 +6,7 @@ import { styled } from "@mui/system";
 import { ReactComponent as LikeIcon } from "./img/like.svg";
 import { ReactComponent as DislikeIcon } from "./img/dislike.svg";
 import { ReactComponent as RewindIcon } from "./img/rewind.svg";
-import { useDispatch } from "react-redux";
-import { likeMovie, dislikeMovie } from "../store/moviesSlice";
-import { getNextMovie } from "./movieUtils";
+
 
 const ButtonsTabs = styled(Tabs)({
   width: "292px",
@@ -16,7 +14,11 @@ const ButtonsTabs = styled(Tabs)({
   backgroundColor: "#545963",
   borderRadius: "30px",
 });
-export default function ButtonsCard({ handleLike, handleDislike, handlePreviousMovie }) {
+export default function ButtonsCard({
+  handleLike,
+  handleDislike,
+  handlePreviousMovie,
+}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -29,10 +31,6 @@ export default function ButtonsCard({ handleLike, handleDislike, handlePreviousM
 
   const handleDislikeClick = () => {
     handleDislike();
-  };
-
-  const handleRewindClick = () => {
-    handlePreviousMovie();
   };
 
   return (
@@ -51,7 +49,7 @@ export default function ButtonsCard({ handleLike, handleDislike, handlePreviousM
         <Tab
           icon={<RewindIcon />}
           aria-label="rewind"
-          onClick={handleRewindClick}
+          onClick={handlePreviousMovie}
         />
       </ButtonsTabs>
     </div>

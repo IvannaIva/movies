@@ -2,73 +2,64 @@ import "../components/styles/App.css";
 import React, { useEffect, useState } from "react";
 import ButtonsCard from "../components/ButtonsCard";
 import MovieCard from "../components/MovieCard";
-import { setMoviesData } from "../store/moviesSlice";
-import { useNavigate } from "react-router-dom";
+import { setAllMoviesData, setCurrentMovieIndex } from "../store/moviesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "../components/styles/App.css";
 
-import { getMovies, getMovieById } from "../api/aws-exports";
+import { getMovies } from "../api/aws-exports";
 import { likeMovie, dislikeMovie } from "../store/moviesSlice";
 
 function DiscoverPage() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const moviesData = useSelector((state) => state.movies.moviesData);
+
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [currentMovieId, setCurrentMovieId] = useState(1);
+  const allMoviesData = useSelector((state) => state.movies.allMoviesData);
+  const currentMovieIndex = useSelector(
+    (state) => state.movies.currentMovieIndex
+  );
+
+  useEffect(() => {
+    async function fetchMovies() {
+      try {
+        const response = await getMovies({
+          region: "US",
+          type: "tv",
+        });
+        console.log("Moviesssssssssss", response.movies);
+        // Оновлюємо стан компонента зі списком фільмів з API
+        dispatch(setAllMoviesData(response.movies));
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    }
+
+    if (!allMoviesData.length) {
+      fetchMovies();
+    }
+  }, [dispatch, allMoviesData]);
+
+  const currentMovieId = allMoviesData[currentMovieIndex]?.id; // Отримуємо ID обраного фільму
+  const currentMovie = allMoviesData[currentMovieIndex];
 
   const handleNextMovie = () => {
-    // Оновлюємо ідентифікатор для відображення наступного фільму
-    setCurrentMovieId(currentMovieId + 1);
-  };
-  const handlePreviousMovie = () => {
-    if (currentMovieId !== 1) {
-      setCurrentMovieId(currentMovieId - 1);
+    if (currentMovieIndex < allMoviesData.length - 1) {
+      dispatch(setCurrentMovieIndex(currentMovieIndex + 1));
     }
   };
 
-  //  getMovies({})
-  //  .then((response) => {
-  //    console.log("All Movies:", response);
-
-  //    if (response.error) {
-  //      // Обробка помилки, якщо є
-  //    } else {
-  //      // Обробка результатів запиту зі списком всіх фільмів
-  //    }
-  //  })
-  //  .catch((error) => {
-  //    console.error("Error fetching all movies:", error);
-  //  });
-
-  useEffect(() => {
-    getMovieById(currentMovieId)
-      .then((response) => {
-        console.log("Movie by ID:", response);
-
-        if (response.error) {
-          setErrorMessage(response.error.message);
-          dispatch(setMoviesData(null));
-        } else {
-          setErrorMessage(null);
-
-          dispatch(setMoviesData(response));
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching movie by ID:", error);
-      });
-  }, [currentMovieId]);
+  const handlePreviousMovie = () => {
+    if (currentMovieIndex > 0) {
+      dispatch(setCurrentMovieIndex(currentMovieIndex - 1));
+    }
+  };
 
   const handleLike = () => {
-   
     dispatch(likeMovie(currentMovieId));
     handleNextMovie();
   };
 
   const handleDislike = () => {
-  
     dispatch(dislikeMovie(currentMovieId));
     handleNextMovie();
   };
@@ -76,12 +67,15 @@ function DiscoverPage() {
   return (
     <div className="Home">
       <div className="discover">
-        <MovieCard
-          imageUrl="/path/to/image.jpg"
-          title="Заголовок"
-          description="Опис"
-          moviesData={moviesData}
-        />
+        {currentMovieId && (
+          <MovieCard
+            key={currentMovieId}
+            imageUrl={currentMovie.imageUrl}
+            title={currentMovie.title}
+            description={currentMovie.description}
+            currentMovie={currentMovie}
+          />
+        )}
         <ButtonsCard
           handleLike={handleLike}
           handleDislike={handleDislike}

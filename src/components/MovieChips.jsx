@@ -1,13 +1,14 @@
 import * as React from "react";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import { CenterFocusWeakOutlined } from "@mui/icons-material";
 
-export default function MovieChips({ moviesData }) {
+export default function MovieChips({ movieDetails }) {
   return (
-    <Stack direction="row" spacing={1} alignItems="center">
+    <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
       {/* <Stack direction="row" spacing={1}> */}
       <Chip
-        label={moviesData.year}
+        label={movieDetails.year}
         sx={{
           backgroundColor: "#0BA7FF",
           color: "success.white",
@@ -15,24 +16,25 @@ export default function MovieChips({ moviesData }) {
         }}
       />
       <Chip
-        label={moviesData.type}
+        label={movieDetails.type}
         sx={{
           backgroundColor: "#51E97C",
           color: "success.white",
           fontSize: 14,
         }}
       />
-      <Chip
-        label={moviesData.familyFriendly}
+      <Chip 
+       label = {movieDetails.familyFriendly ? movieDetails.familyFriendly : movieDetails.imdbScore}
         clickable={false}
         sx={{
           backgroundColor: "#363A47",
           color: "success.white",
           fontSize: 14,
+          
         }}
         />
       <Chip
-        label={moviesData.streamingService}
+        label={movieDetails.streamingService}
         sx={{
           backgroundColor: "#FFC90B",
           color: "success.white",

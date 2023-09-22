@@ -13,16 +13,15 @@ import Navbar from "../components/Navbar/Navbar";
 const Authorized = () => {
 
   return (
-    // <div style={{ display: 'flex' }}>
+
     <div className="App-body">
-        {/* Зліва - Вертикальне меню */}
+     
         <Navbar />
 
-    {/* Роутинг */}
+
     <div className="App-main">
     <Routes >
       <Route path="/" element={<DiscoverPage />} />
-      {/* <Route path="/weather" element={<WeatherPage />} /> */}
       <Route path="/filters" element={<FiltersPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="/movie/:id" element={<MoviePage/>} />

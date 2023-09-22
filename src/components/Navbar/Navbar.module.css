@@ -2,6 +2,7 @@
     background-color: #545963;
     width: 170px;
     height: 900px;
+    margin: 0 auto;
 }
 
 .activeLink {
@@ -11,4 +12,5 @@
 
 .signOut {
     cursor: pointer;
+    /* text-align: center; */
 }

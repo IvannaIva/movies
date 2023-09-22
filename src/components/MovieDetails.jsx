@@ -22,38 +22,54 @@ const CardMovie = styled(Card)({
 });
 
 export default function MovieDetails() {
-  const moviesData = useSelector((state) => state.movies.moviesData);
+  const movieDetails = useSelector((state) => state.movies.movieDetails);
 
-  const maxTextLength = 30;
+  // const maxTextLengthGenres = 30;
+  // const maxTextLengthDescription = 500;
 
   let genres = "";
+  let description = "";
 
-  if (moviesData.genres) {
-    genres = moviesData.genres.join(", ");
+  if (movieDetails && movieDetails.genres) {
+    genres = movieDetails.genres.join(", ");
   }
 
-  if (genres.length > maxTextLength) {
-    genres = (
-      <span>
-        {genres.slice(0, maxTextLength)}
-        <span className="more"> more...</span>
-      </span>
-    );
-  }
+  const textData = [
+    { text: genres, maxTextLength: 30 },
+    { text: movieDetails.description, maxTextLength: 300 },
+  ];
+
+  const shortenedTexts = textData.map((item) => {
+    const { text, maxTextLength } = item;
+    if (text && text.length > maxTextLength) {
+      return (
+        <span key={text.slice(0, maxTextLength)}>
+          {text.slice(0, maxTextLength)}
+          <span className="more"> more...</span>
+        </span>
+      );
+    } else {
+      return text;
+    }
+  });
 
   return (
     <CardMovie>
       <CardContent className={styles.cardContentDetails}>
         <Typography className={styles.titleMovieDetails}>
-          {moviesData.title}
+          {movieDetails.title}
         </Typography>
         <Typography className={styles.descriptionMovie}>
           <p>
-            {moviesData.altGenres.join(", ")}, {moviesData.year}
+            {movieDetails && movieDetails.altGenres && (
+              <>
+                {movieDetails.altGenres.join(", ")} {movieDetails.year}
+              </>
+            )}
           </p>
         </Typography>
         <Typography className={styles.descriptionMovie}>
-          <p>{moviesData.description}</p>
+          <p>{shortenedTexts[1]}</p>
         </Typography>
 
         <Table className={styles.tableWithoutBorder}>
@@ -61,19 +77,19 @@ export default function MovieDetails() {
             <TableRow>
               <TableCell className={styles.table_cell}>Creators</TableCell>
               <TableCell className={styles.descriptionMovie}>
-                {moviesData.creator}
+                {movieDetails.creator}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className={styles.table_cell}>imdbScore</TableCell>
               <TableCell className={styles.descriptionMovie}>
-                {moviesData.imdbScore}
+                {movieDetails.imdbScore}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className={styles.table_cell}>Subtitles</TableCell>
               <TableCell className={styles.descriptionMovie}>
-                {moviesData.creator}
+                {movieDetails.creator}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -85,13 +101,11 @@ export default function MovieDetails() {
             <TableRow>
               <TableCell className={styles.table_cell}>Region</TableCell>
               <TableCell className={styles.descriptionMovie}>
-                {moviesData.region}
+                {movieDetails.region}
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
-
-
       </CardContent>
     </CardMovie>
   );

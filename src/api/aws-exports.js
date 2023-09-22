@@ -33,6 +33,7 @@ export const getMovies = (queryParams) => {
     })
 }
 
+
 export const getMovieById = (id) => {
     return API.get('BingerApis-APIs', `/movies/${id}`, {})
 }

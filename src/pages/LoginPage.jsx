@@ -1,7 +1,7 @@
 import React from "react";
 import EmailPasForm from "../components/EmailPasForm";
 import Email from "../components/Email";
-// import { Authenticator, SignIn, SignUp } from 'aws-amplify';
+
 
 function LoginPage() {
   return (
