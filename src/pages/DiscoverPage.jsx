@@ -68,13 +68,15 @@ function DiscoverPage() {
     <div className="Home">
       <div className="discover">
         {currentMovieId && (
-          <MovieCard
-            key={currentMovieId}
-            imageUrl={currentMovie.imageUrl}
-            title={currentMovie.title}
-            description={currentMovie.description}
-            currentMovie={currentMovie}
-          />
+          <>
+            <MovieCard
+              key={currentMovieId}
+              imageUrl={currentMovie.imageUrl}
+              title={currentMovie.title}
+              description={currentMovie.description}
+              currentMovie={currentMovie}
+            />
+          </>
         )}
         <ButtonsCard
           handleLike={handleLike}

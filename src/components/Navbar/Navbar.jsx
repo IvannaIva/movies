@@ -21,41 +21,67 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const currentMovieIndex = useSelector(
+    (state) => state.movies.currentMovieIndex
+  );
+  const allMoviesData = useSelector((state) => state.movies.allMoviesData);
+
+  const currentMovieId = allMoviesData[currentMovieIndex]?.id;
+  console.log("idddddddd", currentMovieId);
+
   const handleSignOut = () => {
     dispatch(logout());
     navigate("/");
   };
-  
+
   const listItemStyles = {
     flexDirection: "column",
     alignItems: "center",
-  
+
     marginBottom: "30px", // Додайте відступ між айтемами
   };
 
   return (
     <List component="nav" className={cl.navbar}>
       {/* Logo */}
-      <ListItem className="logoItm" sx={{  justifyContent: "center"}}  >
-        <Typography variant="h4"  className="logoText">MaxM</Typography>
-    
+      <ListItem className="logoItm" sx={{ justifyContent: "center" }}>
+        <Typography variant="h4" className="logoText">
+          MaxM
+        </Typography>
       </ListItem>
 
       <ListItem
         component={NavLink}
         to="/"
         exact
-        className={location.pathname === "/" ? cl.activeLink : "navLink"}
+        className={
+          location.pathname === "/" ||
+          location.pathname === `/movie/${currentMovieId}`
+            ? cl.activeLink
+            : "navLink"
+        }
         style={listItemStyles}
       >
         <ListItemIcon>
           <img
-            src={location.pathname === "/" ? descoverGreenImg : descoverImg}
+            src={
+              location.pathname === "/" ||
+              location.pathname === `/movie/${currentMovieId}`
+                ? descoverGreenImg
+                : descoverImg
+            }
             alt="Discover"
             className="imgItem"
           />
         </ListItemIcon>
-        <ListItemText primary={location.pathname === "/" ? "Discover" : ""} />
+        <ListItemText
+          primary={
+            location.pathname === "/" ||
+            location.pathname === `/movie/${currentMovieId}`
+              ? "Discover"
+              : ""
+          }
+        />
       </ListItem>
       <ListItem
         component={NavLink}
@@ -63,7 +89,7 @@ const Navbar = () => {
         className={location.pathname === "/filters" ? cl.activeLink : "navLink"}
         style={listItemStyles}
       >
-        <ListItemIcon sc={ {justifyContent: "center"}}>
+        <ListItemIcon sc={{ justifyContent: "center" }}>
           <img
             className="imgItem"
             src={location.pathname === "/filters" ? filterGreenImg : filterImg}
@@ -94,7 +120,7 @@ const Navbar = () => {
           primary={location.pathname === "/settings" ? "Settings" : ""}
         />
       </ListItem>
-      <ListItem 
+      <ListItem
         button
         onClick={handleSignOut}
         style={{
@@ -103,10 +129,12 @@ const Navbar = () => {
           right: "0",
           flexDirection: "column",
         }}
-      > <ListItemIcon>
-        {/* <div className={cl.signOut}> */}
+      >
+        {" "}
+        <ListItemIcon>
+          {/* <div className={cl.signOut}> */}
           <img src={signOutImg} alt="Опис зображення" />
-          </ListItemIcon>
+        </ListItemIcon>
         {/* </div> */}
       </ListItem>
     </List>

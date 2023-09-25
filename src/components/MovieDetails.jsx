@@ -22,7 +22,7 @@ const CardMovie = styled(Card)({
 });
 
 export default function MovieDetails({currentMovie}) {
-  // const movieDetails = useSelector((state) => state.movies.movieDetails);
+
 
   let actors = "";
   let genres = "";

@@ -9,11 +9,13 @@ const moviesSlice = createSlice({
         errorMessage: null,
         likedMovies: [],
         dislikedMovies: [],
+
     },
     reducers: {
         setCurrentMovieIndex: (state, action) => {
             state.currentMovieIndex = action.payload;
         },
+
 
         setMovieDetails: (state, action) => {
             state.movieDetails = action.payload;
@@ -57,7 +59,7 @@ const moviesSlice = createSlice({
 });
 
 export const {
-    setCurrentMovieId,
+
     setCurrentMovieIndex,
     setMovieDetails,
     setAllMoviesData,

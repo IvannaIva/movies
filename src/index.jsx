@@ -6,17 +6,16 @@ import { Provider } from "react-redux";
 import store, { persistor } from "./store";
 import { PersistGate } from "reduxjs-toolkit-persist/lib/integration/react";
 
+import { Amplify } from "aws-amplify";
 
-import { Amplify } from 'aws-amplify'; 
-
-import awsConfig from './api/aws-exports';
+import awsConfig from "./api/aws-exports";
 
 Amplify.configure(awsConfig);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-  <Provider store={store}>
+    <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <App />
       </PersistGate>
